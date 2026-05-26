@@ -3,6 +3,7 @@ import Projects from "@/components/Projects";
 import TechStack from "@/components/TechStack";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import About from "@/components/About";
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
       <Navbar />
       {/* The Scrollytelling Sequence */}
       <MainWrapper />
+
+      {/* About Section */}
+      <About />
 
       {/* The Work Grid */}
       <Projects />
