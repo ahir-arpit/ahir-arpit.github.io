@@ -63,15 +63,13 @@ export default function Overlay({ containerRef }: { containerRef: RefObject<HTML
       {/* Section 3 */}
       <motion.div
         style={{ opacity: opacity3, y: y3 }}
-        className="absolute bottom-16 md:bottom-24 w-full flex justify-end max-w-7xl mx-auto pr-8 md:pr-16 lg:pr-32"
+        className="absolute top-24 md:top-32 lg:top-40 w-full flex justify-end px-8 md:px-16 lg:px-24"
       >
         <div className="flex flex-col items-end text-right">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tighter leading-[1.2] drop-shadow-2xl">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-[#2dd4bf]">Code</span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-400">Create</span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-pink-500">Innovate</span>
+          <h2 className="text-4xl md:text-5xl lg:text-[5.5rem] font-sans font-black tracking-tighter leading-none drop-shadow-2xl">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-[#2dd4bf] block">Code</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-400 block mt-2 md:mt-3">Create</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-pink-500 block mt-2 md:mt-3">Innovate</span>
           </h2>
         </div>
       </motion.div>

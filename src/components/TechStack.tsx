@@ -19,7 +19,7 @@ export default function TechStack() {
   return (
     <section className="relative bg-transparent text-white py-20 md:py-32 px-8 md:px-24 flex flex-col justify-center">
       <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
-        <motion.h3 
+        <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -29,7 +29,7 @@ export default function TechStack() {
           Tools & Technology
         </motion.h3>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
@@ -49,8 +49,8 @@ export default function TechStack() {
                 hidden: { opacity: 0, y: 20, scale: 0.8 },
                 show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 20 } }
               }}
-              whileHover={{ 
-                scale: 1.05, 
+              whileHover={{
+                scale: 1.05,
                 y: -5,
                 backgroundColor: "rgba(255,255,255,0.1)",
                 borderColor: "rgba(255,255,255,0.3)"
@@ -59,7 +59,7 @@ export default function TechStack() {
             >
               {/* Glowing colored dot */}
               <span className={`w-2.5 h-2.5 rounded-full ${tech.color} ${tech.shadow} group-hover:scale-125 transition-transform duration-300`} />
-              
+
               <h4 className="text-lg font-medium tracking-wide text-gray-300 group-hover:text-white transition-colors duration-300">
                 {tech.name}
               </h4>

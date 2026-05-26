@@ -75,7 +75,7 @@ export default function Footer() {
               <h4 className="text-sm text-gray-500 mb-4 font-medium">Education</h4>
               <p className="text-gray-300 text-sm tracking-wide mb-4">B.Tech in Computer Science and Engineering</p>
               <p className="text-gray-300 text-sm tracking-wide mb-4">Internet Of Things (IoT)</p>
-              <p className="text-gray-300 text-sm tracking-wide">CGPA: 7.3</p>
+
             </motion.div>
           </div>
 
