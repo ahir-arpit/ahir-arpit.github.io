@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { image } from "framer-motion/client";
 
 function ProjectCard({ proj, i }: { proj: any; i: number }) {
   const x = useMotionValue(0);
