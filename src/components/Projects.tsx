@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { image } from "framer-motion/client";
 
 function ProjectCard({ proj, i }: { proj: any; i: number }) {
   const x = useMotionValue(0);
@@ -40,7 +41,7 @@ function ProjectCard({ proj, i }: { proj: any; i: number }) {
       }}
       className="group"
     >
-      <motion.div 
+      <motion.div
         style={{
           rotateX,
           rotateY,
@@ -50,10 +51,17 @@ function ProjectCard({ proj, i }: { proj: any; i: number }) {
         onMouseLeave={handleMouseLeave}
         className="relative h-96 rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-md transition-colors duration-500 hover:border-white/20 hover:bg-white/10 cursor-pointer flex flex-col justify-end p-8"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition duration-500" />
-        
+        {proj.image && (
+          <img
+            src={proj.image}
+            alt={proj.title}
+            className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-all duration-700 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition duration-500" />
+
         {/* The content that pops out in 3D */}
-        <motion.div 
+        <motion.div
           style={{ translateZ: 50 }}
           className="relative z-10 translate-y-4 group-hover:translate-y-0 transition duration-500"
         >
@@ -63,11 +71,11 @@ function ProjectCard({ proj, i }: { proj: any; i: number }) {
           </div>
           <h4 className="text-3xl font-bold tracking-tight text-white drop-shadow-lg">{proj.title}</h4>
         </motion.div>
-        
+
         {/* Subtle hover glow effect */}
-        <div 
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-700 pointer-events-none" 
-          style={{ boxShadow: 'inset 0 0 40px rgba(255, 255, 255, 0.05)' }} 
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-700 pointer-events-none"
+          style={{ boxShadow: 'inset 0 0 40px rgba(255, 255, 255, 0.05)' }}
         />
       </motion.div>
     </motion.div>
@@ -76,16 +84,16 @@ function ProjectCard({ proj, i }: { proj: any; i: number }) {
 
 export default function Projects() {
   const projects = [
-    { title: "Quantum Luxe", category: "Web App", year: "2024" },
-    { title: "Neuro Sync", category: "Interactive", year: "2023" },
-    { title: "Aero Dynamics", category: "3D Experience", year: "2023" },
-    { title: "Void Analytics", category: "Dashboard", year: "2022" },
+    { title: "Edu Board Go ", category: "Web / Application ", year: "2026", image: "/edu-board-go.jpg" },
+    { title: "Lex Assist Ai", category: "Web Ai ", year: "2025", image: "/lex-assist-ai.png" },
+    { title: "Derma Rural Ai", category: "Application", year: "2025", image: "/derma-rural-ai.jpg" },
+    { title: "E-Learning Website", category: "Website", year: "2025", image: "/e-learning.png" },
   ];
 
   return (
     <section className="relative bg-transparent text-white py-20 md:py-24 px-8 md:px-24">
       <div className="relative z-10 max-w-7xl mx-auto">
-        <motion.h3 
+        <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -94,8 +102,8 @@ export default function Projects() {
         >
           Selected Works
         </motion.h3>
-        
-        <motion.div 
+
+        <motion.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}

@@ -3,16 +3,21 @@
 import { motion } from "framer-motion";
 
 const technologies = [
-  { name: "React", color: "bg-cyan-400", shadow: "shadow-[0_0_15px_rgba(34,211,238,0.6)]" },
-  { name: "Next.js", color: "bg-white", shadow: "shadow-[0_0_15px_rgba(255,255,255,0.6)]" },
-  { name: "TypeScript", color: "bg-blue-500", shadow: "shadow-[0_0_15px_rgba(59,130,246,0.6)]" },
-  { name: "Three.js", color: "bg-orange-400", shadow: "shadow-[0_0_15px_rgba(251,146,60,0.6)]" },
-  { name: "Framer Motion", color: "bg-purple-500", shadow: "shadow-[0_0_15px_rgba(168,85,247,0.6)]" },
-  { name: "Tailwind CSS", color: "bg-cyan-500", shadow: "shadow-[0_0_15px_rgba(6,182,212,0.6)]" },
-  { name: "Node.js", color: "bg-green-500", shadow: "shadow-[0_0_15px_rgba(34,197,94,0.6)]" },
   { name: "Python", color: "bg-yellow-400", shadow: "shadow-[0_0_15px_rgba(250,204,21,0.6)]" },
-  { name: "C++", color: "bg-blue-600", shadow: "shadow-[0_0_15px_rgba(37,99,235,0.6)]" },
+  { name: "Node.js", color: "bg-green-500", shadow: "shadow-[0_0_15px_rgba(34,197,94,0.6)]" },
+  { name: "HTML", color: "bg-orange-500", shadow: "shadow-[0_0_15px_rgba(249,115,22,0.6)]" },
+  { name: "Git", color: "bg-orange-600", shadow: "shadow-[0_0_15px_rgba(234,88,12,0.6)]" },
+  { name: "GitHub", color: "bg-gray-400", shadow: "shadow-[0_0_15px_rgba(156,163,175,0.6)]" },
+  { name: "Arduino IDE", color: "bg-teal-500", shadow: "shadow-[0_0_15px_rgba(20,184,166,0.6)]" },
+  { name: "CSS", color: "bg-blue-500", shadow: "shadow-[0_0_15px_rgba(59,130,246,0.6)]" },
   { name: "IoT", color: "bg-red-500", shadow: "shadow-[0_0_15px_rgba(239,68,68,0.6)]" },
+  { name: "Front-End Development", color: "bg-pink-400", shadow: "shadow-[0_0_15px_rgba(244,114,182,0.6)]" },
+  { name: "Flask", color: "bg-gray-300", shadow: "shadow-[0_0_15px_rgba(209,213,219,0.6)]" },
+  { name: "SQL", color: "bg-blue-400", shadow: "shadow-[0_0_15px_rgba(96,165,250,0.6)]" },
+  { name: "Flutter", color: "bg-cyan-400", shadow: "shadow-[0_0_15px_rgba(34,211,238,0.6)]" },
+  { name: "Back-End Web Development", color: "bg-emerald-400", shadow: "shadow-[0_0_15px_rgba(52,211,153,0.6)]" },
+  { name: "MongoDB", color: "bg-green-600", shadow: "shadow-[0_0_15px_rgba(22,163,74,0.6)]" },
+  { name: "Engineering", color: "bg-indigo-400", shadow: "shadow-[0_0_15px_rgba(129,140,248,0.6)]" },
 ];
 
 export default function TechStack() {

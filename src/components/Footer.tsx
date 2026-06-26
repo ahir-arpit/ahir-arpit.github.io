@@ -83,13 +83,13 @@ export default function Footer() {
           <div className="flex-1 mt-12 md:mt-0 pt-28">
             <h4 className="text-sm text-gray-500 mb-4 font-medium">Social</h4>
             <div className="w-full max-w-[200px]">
-              <a href="#" className="group flex items-center justify-between text-gray-300 hover:text-orange-400 text-2xl border-b border-gray-600 pb-2 mb-4 transition-colors duration-300">
+              <a href="https://github.com/ahir-arpit" className="group flex items-center justify-between text-gray-300 hover:text-orange-400 text-2xl border-b border-gray-600 pb-2 mb-4 transition-colors duration-300">
                 <span className="font-serif">Github</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
-              <a href="#" className="group flex items-center justify-between text-gray-300 hover:text-blue-400 text-2xl border-b border-gray-600 pb-2 mb-4 transition-colors duration-300">
+              <a href="https://www.linkedin.com/in/arpit-yadav21/" className="group flex items-center justify-between text-gray-300 hover:text-blue-400 text-2xl border-b border-gray-600 pb-2 mb-4 transition-colors duration-300">
                 <span className="font-serif">Linkedin</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 17L17 7M17 7H9M17 7v8" /></svg>
               </a>
