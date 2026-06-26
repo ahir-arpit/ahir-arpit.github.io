@@ -18,7 +18,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  ci:
+    name: "CI (Continuous Integration)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,12 +74,13 @@ jobs:
         with:
           path: ./out
 
-  deploy:
+  cd:
+    name: "CD (Continuous Deployment)"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: ci
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
