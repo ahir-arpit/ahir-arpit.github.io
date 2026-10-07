@@ -26,6 +26,14 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="preload"
+          href="/sequence/frame_000_delay-0.066s.webp"
+          as="image"
+          type="image/webp"
+        />
+      </head>
       <body className="min-h-full flex flex-col relative md:cursor-none">
         <CustomCursor />
         <Background3D />

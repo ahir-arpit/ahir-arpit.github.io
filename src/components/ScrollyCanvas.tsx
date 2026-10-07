@@ -11,54 +11,40 @@ const getFramePath = (index: number) => {
 
 export default function ScrollyCanvas({ containerRef }: { containerRef: RefObject<HTMLDivElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(frameCount).fill(null));
+  const [firstFrameLoaded, setFirstFrameLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Preload images
-  useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    let loadedCount = 0;
-
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = getFramePath(i);
-
-      const onImageLoad = () => {
-        loadedCount++;
-        if (loadedCount === frameCount) {
-          setLoaded(true);
-        }
-      };
-
-      img.onload = onImageLoad;
-      // In case images are missing in the sequence directory, just proceed so we don't block forever
-      img.onerror = onImageLoad;
-
-      loadedImages.push(img);
-    }
-    setImages(loadedImages);
-  }, []);
-
   const drawFrame = (frameIndex: number) => {
-    if (!canvasRef.current || images.length === 0 || !images[frameIndex]) return;
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const img = images[frameIndex];
-
-    // Safety check for empty/errored images
-    if (!img.width || !img.height) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
+    // Find exact image or fallback to nearest loaded frame
+    let img: HTMLImageElement | null = imagesRef.current[frameIndex] || null;
+    if (!img) {
+      for (let delta = 1; delta < frameCount; delta++) {
+        const prev = frameIndex - delta;
+        const next = frameIndex + delta;
+        if (prev >= 0 && imagesRef.current[prev]) {
+          img = imagesRef.current[prev];
+          break;
+        }
+        if (next < frameCount && imagesRef.current[next]) {
+          img = imagesRef.current[next];
+          break;
+        }
+      }
     }
 
-    // Calculate object-fit: cover logic
+    if (!img || !img.width || !img.height) return;
+
+    // Object-fit: cover logic
     const hRatio = canvas.width / img.width;
     const vRatio = canvas.height / img.height;
     const ratio = Math.max(hRatio, vRatio);
@@ -73,13 +59,75 @@ export default function ScrollyCanvas({ containerRef }: { containerRef: RefObjec
     );
   };
 
-  // Draw initial frame and handle resizing
+  // 1. Load initial frame 0 immediately so page renders without delay
   useEffect(() => {
-    if (!loaded || !canvasRef.current || images.length === 0) return;
+    const frame0 = new Image();
+    frame0.src = getFramePath(0);
+    frame0.onload = () => {
+      imagesRef.current[0] = frame0;
+      setFirstFrameLoaded(true);
+    };
+    frame0.onerror = () => {
+      setFirstFrameLoaded(true);
+    };
+  }, []);
+
+  // 2. Load remaining frames progressively in background (keyframes first, then rest)
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadImagesInBatches = async () => {
+      // Step A: Keyframes every 5th index (5, 10, 15, ...)
+      const keyframes: number[] = [];
+      const rest: number[] = [];
+
+      for (let i = 1; i < frameCount; i++) {
+        if (i % 5 === 0) keyframes.push(i);
+        else rest.push(i);
+      }
+
+      const fetchBatch = async (indices: number[], batchSize = 6) => {
+        for (let i = 0; i < indices.length; i += batchSize) {
+          if (isCancelled) break;
+          const chunk = indices.slice(i, i + batchSize);
+          await Promise.all(
+            chunk.map(
+              (idx) =>
+                new Promise<void>((resolve) => {
+                  const img = new Image();
+                  img.src = getFramePath(idx);
+                  img.onload = () => {
+                    imagesRef.current[idx] = img;
+                    resolve();
+                  };
+                  img.onerror = () => resolve();
+                })
+            )
+          );
+        }
+      };
+
+      await fetchBatch(keyframes, 8);
+      await fetchBatch(rest, 6);
+    };
+
+    loadImagesInBatches();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  // Handle Canvas sizing and initial drawing when frame 0 is ready
+  useEffect(() => {
+    if (!firstFrameLoaded || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    const currentFrame = Math.floor(scrollYProgress.get() * (frameCount - 1));
+    drawFrame(currentFrame);
 
     const resizeObserver = new ResizeObserver(() => {
       canvas.width = window.innerWidth;
@@ -89,14 +137,11 @@ export default function ScrollyCanvas({ containerRef }: { containerRef: RefObjec
 
     resizeObserver.observe(document.body);
 
-    drawFrame(0);
-
     return () => resizeObserver.disconnect();
-  }, [loaded, images]);
-
+  }, [firstFrameLoaded]);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (!loaded) return;
+    if (!firstFrameLoaded) return;
     const frameIndex = Math.min(
       frameCount - 1,
       Math.max(0, Math.floor(latest * (frameCount - 1)))
@@ -110,7 +155,7 @@ export default function ScrollyCanvas({ containerRef }: { containerRef: RefObjec
         ref={canvasRef}
         className="h-full w-full block absolute inset-0 z-0 bg-[#121212]"
       />
-      {!loaded && (
+      {!firstFrameLoaded && (
         <div className="absolute inset-0 flex items-center justify-center text-white z-50 bg-[#121212]">
           <div className="animate-pulse flex flex-col items-center">
             <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4" />
@@ -121,3 +166,4 @@ export default function ScrollyCanvas({ containerRef }: { containerRef: RefObjec
     </>
   );
 }
+
